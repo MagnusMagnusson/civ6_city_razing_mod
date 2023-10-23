@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- GameSetupParameters -->
+<!-- Author: Magnus -->
+<!-- DateCreated: 10/21/2023 11:00:54 PM -->
+<GameData>
+	<Parameters>
+		<!-- Give the defeated player a settler? -->
+		<Row ParameterId="MCR_GIVE_SETTLER" Name="MCR_LOC_GIVE_SETTLER_NAME" Description="MCR_LOC_GIVE_SETTLER_DESC" Domain="bool" DefaultValue="0" ConfigurationGroup="Game" ConfigurationId="MCR_GIVE_SETTLER_ID" GroupId="AdvancedOptions" SortIndex="2"/>
+		<!-- How big of a percent of the population survives? -->
+		<Row ParameterId="MCR_REFUGEE_PERCENT" Name="MCR_LOC_REFUGEE_PERCENT_NAME" Description="MCR_LOC_REFUGEE_PERCENT_DESC" Domain="RefugeeRange" DefaultValue="5" ConfigurationGroup="Game" ConfigurationId="MCR_REFUGEE_PERCENT_CONF" Hash="0" GroupId="AdvancedOptions" SortIndex="1"/>
+
+	</Parameters>
+	<DomainRanges>
+		<Row Domain="RefugeeRange" MinimumValue="0" MaximumValue="10" />
+	</DomainRanges>
+</GameData>

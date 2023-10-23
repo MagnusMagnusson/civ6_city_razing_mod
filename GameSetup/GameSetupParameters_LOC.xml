@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- GameSetupParameters_LOC -->
+<!-- Author: Magnus -->
+<!-- DateCreated: 10/21/2023 11:13:02 PM -->
+<GameData>
+	<LocalizedText>
+		<Row Tag="MCR_LOC_GIVE_SETTLER_NAME" Language="en_US">
+			<Text>City Razing Gives Settler</Text>
+		</Row>
+		<Row Tag="MCR_LOC_GIVE_SETTLER_DESC" Language="en_US">
+			<Text>The owner of a razed city gets a free settler</Text>
+		</Row>
+		<Row Tag="MCR_LOC_REFUGEE_PERCENT_NAME" Language="en_US">
+			<Text>City Razing Survival Rate</Text>
+		</Row>
+		<Row Tag="MCR_LOC_REFUGEE_PERCENT_DESC" Language="en_US">
+			<Text>Average percentage of a razed cities population that relocates to nearby cities (each point being a 10% chance per pop)</Text>
+		</Row>
+	</LocalizedText>
+</GameData>

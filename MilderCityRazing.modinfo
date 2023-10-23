@@ -1,0 +1,236 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mod id="42361c9a-d5fe-4e05-90dc-374f5a3d1218" version="1">
+  <Properties>
+    <Name>Milder City Razing</Name>
+    <Description>This mod enables game options related to making it slightly less devistating to get a city razed by offering a settler as compensation, or moving a portion of the pops of the razed city to nearby cities.</Description>
+    <Created>1697939736</Created>
+    <Teaser>This mod enables game options related to making it slightly less devistating to get a city razed by offering a settler as compe</Teaser>
+    <Authors>MMagnusson</Authors>
+    <CompatibleVersions>1.2,2.0</CompatibleVersions>
+  </Properties>
+  <ActionCriteria>
+    <Criteria id="MCR_GIVE_SETTLER_ID_Disabled">
+      <ConfigurationValueMatches>
+        <Group>Game</Group>
+        <ConfigurationId>MCR_GIVE_SETTLER_ID</ConfigurationId>
+        <Value>0</Value>
+      </ConfigurationValueMatches>
+    </Criteria>
+    <Criteria id="MCR_GIVE_SETTLER_ID_enabled">
+      <ConfigurationValueMatches>
+        <Group>Game</Group>
+        <ConfigurationId>MCR_GIVE_SETTLER_ID</ConfigurationId>
+        <Value>1</Value>
+      </ConfigurationValueMatches>
+    </Criteria>
+    <Criteria id="MCR_REFUGEE_PERC_0">
+      <ConfigurationValueMatches>
+        <Group>Game</Group>
+        <ConfigurationId>MCR_REFUGEE_PERCENT_CONF</ConfigurationId>
+        <Value>0</Value>
+      </ConfigurationValueMatches>
+    </Criteria>
+        <Criteria id="MCR_REFUGEE_PERC_1">
+      <ConfigurationValueMatches>
+        <Group>Game</Group>
+        <ConfigurationId>MCR_REFUGEE_PERCENT_CONF</ConfigurationId>
+        <Value>1</Value>
+      </ConfigurationValueMatches>
+    </Criteria>
+        <Criteria id="MCR_REFUGEE_PERC_2">
+      <ConfigurationValueMatches>
+        <Group>Game</Group>
+        <ConfigurationId>MCR_REFUGEE_PERCENT_CONF</ConfigurationId>
+        <Value>2</Value>
+      </ConfigurationValueMatches>
+    </Criteria>
+        <Criteria id="MCR_REFUGEE_PERC_3">
+      <ConfigurationValueMatches>
+        <Group>Game</Group>
+        <ConfigurationId>MCR_REFUGEE_PERCENT_CONF</ConfigurationId>
+        <Value>3</Value>
+      </ConfigurationValueMatches>
+    </Criteria>
+        <Criteria id="MCR_REFUGEE_PERC_4">
+      <ConfigurationValueMatches>
+        <Group>Game</Group>
+        <ConfigurationId>MCR_REFUGEE_PERCENT_CONF</ConfigurationId>
+        <Value>4</Value>
+      </ConfigurationValueMatches>
+    </Criteria>
+        <Criteria id="MCR_REFUGEE_PERC_5">
+      <ConfigurationValueMatches>
+        <Group>Game</Group>
+        <ConfigurationId>MCR_REFUGEE_PERCENT_CONF</ConfigurationId>
+        <Value>5</Value>
+      </ConfigurationValueMatches>
+    </Criteria>
+        <Criteria id="MCR_REFUGEE_PERC_6">
+      <ConfigurationValueMatches>
+        <Group>Game</Group>
+        <ConfigurationId>MCR_REFUGEE_PERCENT_CONF</ConfigurationId>
+        <Value>6</Value>
+      </ConfigurationValueMatches>
+    </Criteria>
+        <Criteria id="MCR_REFUGEE_PERC_7">
+      <ConfigurationValueMatches>
+        <Group>Game</Group>
+        <ConfigurationId>MCR_REFUGEE_PERCENT_CONF</ConfigurationId>
+        <Value>7</Value>
+      </ConfigurationValueMatches>
+    </Criteria>
+        <Criteria id="MCR_REFUGEE_PERC_8">
+      <ConfigurationValueMatches>
+        <Group>Game</Group>
+        <ConfigurationId>MCR_REFUGEE_PERCENT_CONF</ConfigurationId>
+        <Value>8</Value>
+      </ConfigurationValueMatches>
+    </Criteria>
+        <Criteria id="MCR_REFUGEE_PERC_9">
+      <ConfigurationValueMatches>
+        <Group>Game</Group>
+        <ConfigurationId>MCR_REFUGEE_PERCENT_CONF</ConfigurationId>
+        <Value>9</Value>
+      </ConfigurationValueMatches>
+    </Criteria>
+        <Criteria id="MCR_REFUGEE_PERC_10">
+      <ConfigurationValueMatches>
+        <Group>Game</Group>
+        <ConfigurationId>MCR_REFUGEE_PERCENT_CONF</ConfigurationId>
+        <Value>10</Value>
+      </ConfigurationValueMatches>
+    </Criteria>
+  </ActionCriteria>
+  <FrontEndActions>
+    <UpdateDatabase id="SetupGameParameters">
+      <File>GameSetup/GameSetupParameters.xml</File>
+    </UpdateDatabase>
+    <UpdateText id="Localization">
+      <File>GameSetup/GameSetupParameters_LOC.xml</File>
+    </UpdateText>
+  </FrontEndActions>
+  <InGameActions>
+    <AddGameplayScripts id="onRaze">      
+    <Properties>
+        <LoadOrder>99999</LoadOrder>
+    </Properties>
+      <File>Ingame/onCityRazed.lua</File>
+    </AddGameplayScripts>
+    <UpdateDatabase id="Schema">      
+      <Properties>
+        <LoadOrder>1</LoadOrder>
+      </Properties>
+      <File priority="10">Ingame/schema.sql</File>
+    </UpdateDatabase>
+    <UpdateDatabase id="giveSettlerDisabled">      
+      <Properties>
+        <LoadOrder>500</LoadOrder>
+      </Properties>
+      <Criteria>MCR_GIVE_SETTLER_ID_Disabled</Criteria>
+      <File priority="1">Ingame/settings/giveSettler/giveSettlerDisabled.sql</File>
+    </UpdateDatabase>
+    <UpdateDatabase id="giveSettlerEnabled">
+        <Properties>
+        <LoadOrder>500</LoadOrder>
+      </Properties>
+      <Criteria>MCR_GIVE_SETTLER_ID_enabled</Criteria>
+      <File>Ingame/settings/giveSettler/giveSettlerEnabled.sql</File>
+    </UpdateDatabase>
+    <UpdateDatabase id="MCR_REFUGEE_PERC_Action_0">
+      <Properties>
+      <LoadOrder>500</LoadOrder>
+    </Properties>
+    <Criteria>MCR_REFUGEE_PERC_0</Criteria>
+    <File>Ingame/settings/refugeePerc/refugee_0.sql</File>
+  </UpdateDatabase>
+      <UpdateDatabase id="MCR_REFUGEE_PERC_Action_1">
+      <Properties>
+      <LoadOrder>500</LoadOrder>
+    </Properties>
+    <Criteria>MCR_REFUGEE_PERC_1</Criteria>
+    <File>Ingame/settings/refugeePerc/refugee_1.sql</File>
+  </UpdateDatabase>
+      <UpdateDatabase id="MCR_REFUGEE_PERC_Action_2">
+      <Properties>
+      <LoadOrder>500</LoadOrder>
+    </Properties>
+    <Criteria>MCR_REFUGEE_PERC_2</Criteria>
+    <File>Ingame/settings/refugeePerc/refugee_2.sql</File>
+  </UpdateDatabase>
+      <UpdateDatabase id="MCR_REFUGEE_PERC_Action_3">
+      <Properties>
+      <LoadOrder>500</LoadOrder>
+    </Properties>
+    <Criteria>MCR_REFUGEE_PERC_3</Criteria>
+    <File>Ingame/settings/refugeePerc/refugee_3.sql</File>
+  </UpdateDatabase>
+      <UpdateDatabase id="MCR_REFUGEE_PERC_Action_4">
+      <Properties>
+      <LoadOrder>500</LoadOrder>
+    </Properties>
+    <Criteria>MCR_REFUGEE_PERC_4</Criteria>
+    <File>Ingame/settings/refugeePerc/refugee_4.sql</File>
+  </UpdateDatabase>
+      <UpdateDatabase id="MCR_REFUGEE_PERC_Action_5">
+      <Properties>
+      <LoadOrder>500</LoadOrder>
+    </Properties>
+    <Criteria>MCR_REFUGEE_PERC_5</Criteria>
+    <File>Ingame/settings/refugeePerc/refugee_5.sql</File>
+  </UpdateDatabase>
+      <UpdateDatabase id="MCR_REFUGEE_PERC_Action_6">
+      <Properties>
+      <LoadOrder>500</LoadOrder>
+    </Properties>
+    <Criteria>MCR_REFUGEE_PERC_6</Criteria>
+    <File>Ingame/settings/refugeePerc/refugee_6.sql</File>
+  </UpdateDatabase>
+      <UpdateDatabase id="MCR_REFUGEE_PERC_Action_7">
+      <Properties>
+      <LoadOrder>500</LoadOrder>
+    </Properties>
+    <Criteria>MCR_REFUGEE_PERC_7</Criteria>
+    <File>Ingame/settings/refugeePerc/refugee_7.sql</File>
+  </UpdateDatabase>
+      <UpdateDatabase id="MCR_REFUGEE_PERC_Action_8">
+      <Properties>
+      <LoadOrder>500</LoadOrder>
+    </Properties>
+    <Criteria>MCR_REFUGEE_PERC_8</Criteria>
+    <File>Ingame/settings/refugeePerc/refugee_8.sql</File>
+  </UpdateDatabase>
+      <UpdateDatabase id="MCR_REFUGEE_PERC_Action_9">
+      <Properties>
+      <LoadOrder>500</LoadOrder>
+    </Properties>
+    <Criteria>MCR_REFUGEE_PERC_9</Criteria>
+    <File>Ingame/settings/refugeePerc/refugee_9.sql</File>
+  </UpdateDatabase>
+      <UpdateDatabase id="MCR_REFUGEE_PERC_Action_10">
+      <Properties>
+      <LoadOrder>500</LoadOrder>
+    </Properties>
+    <Criteria>MCR_REFUGEE_PERC_10</Criteria>
+    <File>Ingame/settings/refugeePerc/refugee_10.sql</File>
+  </UpdateDatabase>
+  </InGameActions>
+  <Files>
+    <File>GameSetup/GameSetupParameters.xml</File>
+    <File>GameSetup/GameSetupParameters_LOC.xml</File>
+    <File>Ingame/onCityRazed.lua</File>
+    <File>Ingame/schema.sql</File>
+    <File>Ingame/settings/giveSettler/giveSettlerDisabled.sql</File>
+    <File>Ingame/settings/giveSettler/giveSettlerEnabled.sql</File>
+    <File>Ingame/settings/refugeePerc/refugee_0.sql</File>
+    <File>Ingame/settings/refugeePerc/refugee_1.sql</File>
+    <File>Ingame/settings/refugeePerc/refugee_2.sql</File>
+    <File>Ingame/settings/refugeePerc/refugee_3.sql</File>
+    <File>Ingame/settings/refugeePerc/refugee_4.sql</File>
+    <File>Ingame/settings/refugeePerc/refugee_5.sql</File>
+    <File>Ingame/settings/refugeePerc/refugee_6.sql</File>
+    <File>Ingame/settings/refugeePerc/refugee_7.sql</File>
+    <File>Ingame/settings/refugeePerc/refugee_8.sql</File>
+    <File>Ingame/settings/refugeePerc/refugee_9.sql</File>
+    <File>Ingame/settings/refugeePerc/refugee_10.sql</File>
+  </Files>
+</Mod>
