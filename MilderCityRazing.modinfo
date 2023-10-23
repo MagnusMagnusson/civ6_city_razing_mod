@@ -23,6 +23,20 @@
         <Value>1</Value>
       </ConfigurationValueMatches>
     </Criteria>
+        <Criteria id="MCR_DETERMINISTIC_REFUGEE_DISABLED">
+      <ConfigurationValueMatches>
+        <Group>Game</Group>
+        <ConfigurationId>MCR_REFUGEE_DETERMINISTIC</ConfigurationId>
+        <Value>0</Value>
+      </ConfigurationValueMatches>
+    </Criteria>
+        <Criteria id="MCR_DETERMINISTIC_REFUGEE_ENABLED">
+      <ConfigurationValueMatches>
+        <Group>Game</Group>
+        <ConfigurationId>MCR_REFUGEE_DETERMINISTIC</ConfigurationId>
+        <Value>1</Value>
+      </ConfigurationValueMatches>
+    </Criteria>
     <Criteria id="MCR_REFUGEE_PERC_0">
       <ConfigurationValueMatches>
         <Group>Game</Group>
@@ -136,6 +150,20 @@
       <Criteria>MCR_GIVE_SETTLER_ID_enabled</Criteria>
       <File>Ingame/settings/giveSettler/giveSettlerEnabled.sql</File>
     </UpdateDatabase>
+    <UpdateDatabase id="RandomRefugeeDisabled">      
+      <Properties>
+        <LoadOrder>500</LoadOrder>
+      </Properties>
+      <Criteria>MCR_DETERMINISTIC_REFUGEE_DISABLED</Criteria>
+      <File priority="1">Ingame/settings/deterministic_refugee/deterministicRefugeeDisabled.sql</File>
+    </UpdateDatabase>
+    <UpdateDatabase id="RandomRefugeeEnabled">
+        <Properties>
+        <LoadOrder>500</LoadOrder>
+      </Properties>
+      <Criteria>MCR_DETERMINISTIC_REFUGEE_ENABLED</Criteria>
+      <File>Ingame/settings/deterministic_refugee/deterministicRefugeeEnabled.sql</File>
+    </UpdateDatabase>
     <UpdateDatabase id="MCR_REFUGEE_PERC_Action_0">
       <Properties>
       <LoadOrder>500</LoadOrder>
@@ -221,6 +249,8 @@
     <File>Ingame/schema.sql</File>
     <File>Ingame/settings/giveSettler/giveSettlerDisabled.sql</File>
     <File>Ingame/settings/giveSettler/giveSettlerEnabled.sql</File>
+    <File>Ingame/settings/deterministic_refugee/deterministicRefugeeDisabled.sql</File>
+    <File>Ingame/settings/deterministic_refugee/deterministicRefugeeEnabled.sql</File>
     <File>Ingame/settings/refugeePerc/refugee_0.sql</File>
     <File>Ingame/settings/refugeePerc/refugee_1.sql</File>
     <File>Ingame/settings/refugeePerc/refugee_2.sql</File>

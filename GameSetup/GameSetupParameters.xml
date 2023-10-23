@@ -8,7 +8,8 @@
 		<Row ParameterId="MCR_GIVE_SETTLER" Name="MCR_LOC_GIVE_SETTLER_NAME" Description="MCR_LOC_GIVE_SETTLER_DESC" Domain="bool" DefaultValue="0" ConfigurationGroup="Game" ConfigurationId="MCR_GIVE_SETTLER_ID" GroupId="AdvancedOptions" SortIndex="2"/>
 		<!-- How big of a percent of the population survives? -->
 		<Row ParameterId="MCR_REFUGEE_PERCENT" Name="MCR_LOC_REFUGEE_PERCENT_NAME" Description="MCR_LOC_REFUGEE_PERCENT_DESC" Domain="RefugeeRange" DefaultValue="5" ConfigurationGroup="Game" ConfigurationId="MCR_REFUGEE_PERCENT_CONF" Hash="0" GroupId="AdvancedOptions" SortIndex="1"/>
-
+		<!--Are refugees guaranteed or random? -->
+		<Row ParameterId="MCR_REFUGEE_DETERMINISTIC" Name="MCR_LOC_REFUGEE_DETERMINISTIC_NAME" Description="MCR_LOC_REFUGEE_DETERMINISTIC_DESC" Domain="bool" DefaultValue="0" ConfigurationGroup="Game" ConfigurationId="MCR_REFUGEE_DETERMINISTIC" GroupId="AdvancedOptions" SortIndex="2"/>
 	</Parameters>
 	<DomainRanges>
 		<Row Domain="RefugeeRange" MinimumValue="0" MaximumValue="10" />

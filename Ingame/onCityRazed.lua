@@ -5,22 +5,10 @@
 
 local CityWatch = {};
 local settings = {};
-function onCityDestroyed(playerID, cityID) 
-	print("City was destroyed", playerID, cityID);
-	for i, city in ipairs(CityWatch) do 
-		if(city.cityId == cityID) then 
-			print("Observed City razed, triggering onRaze()");
-			onCityRazed(city);
-			table.remove(CityWatch, i);
-			break;
-		end
-	end
-end
 
 function onCityRazed(cityInfo)
 	--Grant Settler if the owner isn't out--
 	print("OnCityRazed");
-	print(settings["giveSettler"]);
 	if(settings["giveSettler"] == true) then
 		print("giveSettler enabled");
 		giveSettler(cityInfo.oldOwner, 1);
@@ -60,15 +48,29 @@ function MigratePop(cityInfo, chance)
 			distanceScore = dScore
 		});
 	end
+
+	if(totalDistances == 0) then
+		--Somehow we had no cities?--
+		print("Total distance was 0?! return early");
+		return;
+	end
 	
 
 	print("Distributing refugees");
+	if(settings["guaranteeRefugee"]) then
+		chance = chance / 10;
+	end
 	-- Start Distributing Pops --
 	for i = 0, pop - 1 do 
-		local r = Game.GetRandNum(10);
+		local r;
+		if(settings["guaranteeRefugee"]) then
+			r = i / (pop - 1);
+		else
+			r = Game.GetRandNum(10, "Migrating Razed Pop");
+		end
 		if(r < chance) then 
 			print("Refugee made it!", i, r, chance);
-			local roll = Game.GetRandNum(totalDistances);
+			local roll = Game.GetRandNum(totalDistances, "Deciding where migrated pop goes");
 			local x = 0;
 			local chosenCity = nil;
 			for i, city in ipairs(candidates) do 
@@ -81,7 +83,7 @@ function MigratePop(cityInfo, chance)
 			if(chosenCity ~= nil) then 
 				chosenCity:ChangePopulation(1);
 			end
-			print("Pop migrated to ", chosenCity);
+			print("Pop migrated to ", chosenCity:GetName());
 		else 
 			print("Refugee died.", i, r, chance);
 		end
@@ -100,17 +102,6 @@ function giveSettler(playerId, count)
 	end
 end
 
-function CityOccupationChanged(playerID, cityID) 
-	print("City occupation status changed", playerID, cityID);
-	for i, city in ipairs(CityWatch) do 
-		if(city.cityId == cityID) then 
-			print("City not razed, removing from raze candidate list");
-			table.remove(CityWatch, i);
-			break;
-		end
-	end
-end
-
 function CityConquered(newOwner, oldOwner, cityId)
 	-- Safety check -- 
 	if(newOwner == nil or playerExists(oldOwner) == false or cityId == nil) then
@@ -119,8 +110,23 @@ function CityConquered(newOwner, oldOwner, cityId)
 	end
 
 	print("City was just captured, ", newOwner, oldOwner, cityId);
+
 	local city = GetCityId(newOwner, cityId);
 	local pop = city:GetPopulation();
+
+	for i,cityInfo in ipairs(CityWatch) do
+		if(cityInfo.x == city:GetX() and cityInfo.y == city:GetY()) then
+			cityInfo.oldOwner = oldOwner;
+			cityInfo.newOwner = newOwner;
+			cityInfo.cityId = cityId;
+			cityInfo.population = pop;
+			print("City recaptured in one turn, updating watch");
+			return;
+		end
+	end
+
+	print("City not transferred, adding to watch list");
+
 	local row = {
 		newOwner = newOwner,
 		oldOwner = oldOwner,
@@ -128,8 +134,8 @@ function CityConquered(newOwner, oldOwner, cityId)
 		population = pop,
 		x = city:GetX(),
 		y = city:GetY(),
+		razed = false,
 	}
-	print("population", pop);
 	table.insert(CityWatch, row);
 end
 
@@ -146,20 +152,46 @@ function playerExists(playerId)
 	and PlayerManager.GetPlayer(playerId):IsMajor() == true;
 end
 
-function GameTurnStart(playerID) 
-	print(playerID);
+
+function loadBoolSetting(key, default)	
+	if(GameInfo.MCR_CONFIG[key] ~= nil) then	
+		settings[key] = GameInfo.MCR_CONFIG[key].value == "1";
+	else
+		settings[key] = default
+	end
 end
 
-function init()
-	settings["giveSettler"] = GameInfo.MCR_CONFIG["giveSettler"].value == "1";
-	settings["refugeePerc"] = tonumber(GameInfo.MCR_CONFIG["refugeePerc"].value);
+function loadIntSetting(key, default)	
+	if(GameInfo.MCR_CONFIG[key] ~= nil) then	
+	settings[key] = tonumber(GameInfo.MCR_CONFIG[key].value);
+	else
+		settings[key] = default
+	end
 end
 
-print("subscribing to destruction event");
-Events.CityRemovedFromMap.Add(onCityDestroyed);
-print("subscribing to occupation event");
-Events.CityOccupationChanged.Add(CityOccupationChanged);
-print("subscribing to global Conquest event");
+function OnTurnEnded()
+	print("Turn Ended!");
+	for i, cityInfo in ipairs(CityWatch) do
+		--Because the various events are in a bad order, just check at the end of a turn if any captured cities are still there. 
+		print("Testing", cityInfo.cityId);
+		print(cityInfo.x, cityInfo.y)
+		local plot = Map.GetPlot(cityInfo.x, cityInfo.y);
+		if(plot:IsCity()) then
+			print("City survived", cityInfo.cityId);
+		else
+			print("City razed, giving benefits", cityInfo.cityId);
+			onCityRazed(cityInfo);
+		end
+	end
+	CityWatch = {};
+end
+
+function init()	
+	loadBoolSetting("giveSettler", false);
+	loadBoolSetting("guaranteeRefugee", false);
+	loadIntSetting("refugeePerc", 5);
+end
+
 GameEvents.CityConquered.Add(CityConquered);
-
+Events.TurnEnd.Add(OnTurnEnded);
 init();

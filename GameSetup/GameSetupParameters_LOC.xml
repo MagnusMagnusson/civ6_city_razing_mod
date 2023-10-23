@@ -15,6 +15,12 @@
 		</Row>
 		<Row Tag="MCR_LOC_REFUGEE_PERCENT_DESC" Language="en_US">
 			<Text>Average percentage of a razed cities population that relocates to nearby cities (each point being a 10% chance per pop)</Text>
+		</Row>		
+		<Row Tag="MCR_LOC_REFUGEE_DETERMINISTIC_NAME" Language="en_US">
+			<Text>Deterministic Pop Resettlement</Text>
+		</Row>		
+		<Row Tag="MCR_LOC_REFUGEE_DETERMINISTIC_DESC" Language="en_US">
+			<Text>If enabled, the designated percentage of a razed cities populations always relocates: otherwise each pop will have a chance of escaping.</Text>
 		</Row>
 	</LocalizedText>
 </GameData>
