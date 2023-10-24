@@ -11,7 +11,7 @@ function onCityRazed(cityInfo)
 	print("OnCityRazed");
 	if(settings["giveSettler"] == true) then
 		print("giveSettler enabled");
-		giveSettler(cityInfo.oldOwner, 1);
+		giveSettler(cityInfo.oldOwner, 1, cityInfo);
 	else 
 		print("giveSettler not enabled");
 	end
@@ -56,6 +56,8 @@ function MigratePop(cityInfo, chance)
 	end
 	
 
+	local refs = {};
+	local died = 0;
 	print("Distributing refugees");
 	if(settings["guaranteeRefugee"]) then
 		chance = chance / 10;
@@ -81,18 +83,24 @@ function MigratePop(cityInfo, chance)
 				end
 			end
 			if(chosenCity ~= nil) then 
+				if(refs[chosenCity:GetName()] == nil) then
+					refs[chosenCity:GetName()] = 1;
+				else
+					refs[chosenCity:GetName()] = refs[chosenCity:GetName()] + 1;
+				end
 				chosenCity:ChangePopulation(1);
 			end
 			print("Pop migrated to ", chosenCity:GetName());
 		else 
+			died = died + 1;
 			print("Refugee died.", i, r, chance);
 		end
 	end
 end
 
-function giveSettler(playerId, count)
+function giveSettler(playerId, count, cityInfo)
 	print("giveSettler()");
-	if(playerExists(playerId)) then 
+	if(playerExists(playerId)) then 	
 		local owner = PlayerManager.GetPlayer(playerId)
 		for i = 0, count - 1 do 
 			local capital = owner:GetCities():GetCapitalCity();
@@ -134,7 +142,7 @@ function CityConquered(newOwner, oldOwner, cityId)
 		population = pop,
 		x = city:GetX(),
 		y = city:GetY(),
-		razed = false,
+		Name = city:GetName(),
 	}
 	table.insert(CityWatch, row);
 end
