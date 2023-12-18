@@ -2,7 +2,7 @@
 -- Author: Magnus
 -- DateCreated: 10/21/2023 11:49:34 PM
 --------------------------------------------------------------
-
+print("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
 local CityWatch = {};
 local settings = {};
 
@@ -111,6 +111,8 @@ function giveSettler(playerId, count, cityInfo)
 end
 
 function CityConquered(newOwner, oldOwner, cityId)
+	print("BBBBBBBBBBBB");
+
 	-- Safety check -- 
 	if(newOwner == nil or playerExists(oldOwner) == false or cityId == nil) then
 		print("One or both players involved are not eligable for razing benefits", newOwner, oldOwner, cityId);
@@ -178,7 +180,7 @@ function loadIntSetting(key, default)
 end
 
 function OnTurnEnded()
-	print("Turn Ended!");
+	print("Turn AAAA Ended!");
 	for i, cityInfo in ipairs(CityWatch) do
 		--Because the various events are in a bad order, just check at the end of a turn if any captured cities are still there. 
 		print("Testing", cityInfo.cityId);
@@ -195,6 +197,7 @@ function OnTurnEnded()
 end
 
 function init()	
+	print("Loaded!");
 	loadBoolSetting("giveSettler", false);
 	loadBoolSetting("guaranteeRefugee", false);
 	loadIntSetting("refugeePerc", 5);
