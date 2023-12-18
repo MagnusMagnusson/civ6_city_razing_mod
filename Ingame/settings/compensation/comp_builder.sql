@@ -1,0 +1,1 @@
+REPLACE INTO MCR_CONFIG(name, value) VALUES ("compensation", "builder");

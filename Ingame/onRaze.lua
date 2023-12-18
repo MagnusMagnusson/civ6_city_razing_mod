@@ -116,19 +116,22 @@ function onCityRemoved(pid, cid)
     for i, cityInfo in ipairs(CityWatch) do
 		local plot = Map.GetPlot(cityInfo.x, cityInfo.y);
 		if(plot:IsCity() ~= true) then
-            print("Razed"); 
-            print("Callbacks: ", #Callbacks); 
             --City razed, let's recreate it--
             for i, func in ipairs(Callbacks) do
-                print("func"); 
                 func(cityInfo);
             end
 		end
 	end
 end
 
+function onTurnEnded()
+    -- At this point we ought to have already determined if a city is razed or not, since you must raze the same turn you capture. --
+    CityWatch = {};
+end
+
 GameEvents.CityConquered.Add(OnCityConquered);
 Events.CityRemovedFromMap.Add(onCityRemoved);
+Events.TurnEnd.Add(OnTurnEnded);
 
 function Add(func)
     table.insert(Callbacks, func);

@@ -3,26 +3,56 @@
   <Properties>
     <Name>Civ5 Styled City Razing</Name>
     <Description>This mod enables game options related to making it slightly less devistating to get a city razed by offering a settler as compensation, or moving a portion of the pops of the razed city to nearby cities.</Description>
-    <Created>1697939736</Created>
+    <Created>1702938179</Created>
     <Teaser>This mod enables game options related to making it slightly less devistating to get a city razed by offering a settler as compe</Teaser>
     <Authors>Magnús</Authors>
     <CompatibleVersions>1.2,2.0</CompatibleVersions>
   </Properties>
   <ActionCriteria>
-    <Criteria id="MCR_GIVE_SETTLER_ID_Disabled">
+      <!-- Civ5 versus Civ6 configuration -->
+    <Criteria id="MCR_CIV5_RAZING_STYLE_5">
       <ConfigurationValueMatches>
         <Group>Game</Group>
-        <ConfigurationId>MCR_GIVE_SETTLER_ID</ConfigurationId>
-        <Value>0</Value>
-      </ConfigurationValueMatches>
-    </Criteria>
-    <Criteria id="MCR_GIVE_SETTLER_ID_enabled">
-      <ConfigurationValueMatches>
-        <Group>Game</Group>
-        <ConfigurationId>MCR_GIVE_SETTLER_ID</ConfigurationId>
+        <ConfigurationId>CIV5_RAZING_STYLE</ConfigurationId>
         <Value>1</Value>
       </ConfigurationValueMatches>
     </Criteria>
+        
+    <Criteria id="MCR_CIV5_RAZING_STYLE_6">
+      <ConfigurationValueMatches>
+        <Group>Game</Group>
+        <ConfigurationId>CIV5_RAZING_STYLE</ConfigurationId>
+        <Value>0</Value>
+      </ConfigurationValueMatches>
+    </Criteria>
+
+    <!-- Determine compensation criteria -->
+    <Criteria id="MCR_COMPENSATION_NOTHING">
+      <ConfigurationValueMatches>
+        <Group>Game</Group>
+        <ConfigurationId>MCR_COMPENSATION</ConfigurationId>
+        <Value>NOTHING</Value>
+      </ConfigurationValueMatches>
+    </Criteria>
+
+    <Criteria id="MCR_COMPENSATION_BUILDER">
+      <ConfigurationValueMatches>
+        <Group>Game</Group>
+        <ConfigurationId>MCR_COMPENSATION</ConfigurationId>
+        <Value>BUILDER</Value>
+      </ConfigurationValueMatches>
+    </Criteria>    
+    
+    <Criteria id="MCR_COMPENSATION_SETTLER">
+      <ConfigurationValueMatches>
+        <Group>Game</Group>
+        <ConfigurationId>MCR_COMPENSATION</ConfigurationId>
+        <Value>SETTLER</Value>
+      </ConfigurationValueMatches>
+    </Criteria>   
+     
+    <!-- Deterministic migration -->
+
         <Criteria id="MCR_DETERMINISTIC_REFUGEE_DISABLED">
       <ConfigurationValueMatches>
         <Group>Game</Group>
@@ -37,6 +67,8 @@
         <Value>1</Value>
       </ConfigurationValueMatches>
     </Criteria>
+
+    <!-- migration percent -->
     <Criteria id="MCR_REFUGEE_PERC_0">
       <ConfigurationValueMatches>
         <Group>Game</Group>
@@ -44,77 +76,107 @@
         <Value>0</Value>
       </ConfigurationValueMatches>
     </Criteria>
-        <Criteria id="MCR_REFUGEE_PERC_1">
+
+    <Criteria id="MCR_REFUGEE_PERC_1">
       <ConfigurationValueMatches>
         <Group>Game</Group>
         <ConfigurationId>MCR_REFUGEE_PERCENT_CONF</ConfigurationId>
         <Value>1</Value>
       </ConfigurationValueMatches>
     </Criteria>
-        <Criteria id="MCR_REFUGEE_PERC_2">
+
+    <Criteria id="MCR_REFUGEE_PERC_2">
       <ConfigurationValueMatches>
         <Group>Game</Group>
         <ConfigurationId>MCR_REFUGEE_PERCENT_CONF</ConfigurationId>
         <Value>2</Value>
       </ConfigurationValueMatches>
     </Criteria>
-        <Criteria id="MCR_REFUGEE_PERC_3">
+
+    <Criteria id="MCR_REFUGEE_PERC_3">
       <ConfigurationValueMatches>
         <Group>Game</Group>
         <ConfigurationId>MCR_REFUGEE_PERCENT_CONF</ConfigurationId>
         <Value>3</Value>
       </ConfigurationValueMatches>
     </Criteria>
-        <Criteria id="MCR_REFUGEE_PERC_4">
+
+    <Criteria id="MCR_REFUGEE_PERC_4">
       <ConfigurationValueMatches>
         <Group>Game</Group>
         <ConfigurationId>MCR_REFUGEE_PERCENT_CONF</ConfigurationId>
         <Value>4</Value>
       </ConfigurationValueMatches>
     </Criteria>
-        <Criteria id="MCR_REFUGEE_PERC_5">
+
+    <Criteria id="MCR_REFUGEE_PERC_5">
       <ConfigurationValueMatches>
         <Group>Game</Group>
         <ConfigurationId>MCR_REFUGEE_PERCENT_CONF</ConfigurationId>
         <Value>5</Value>
       </ConfigurationValueMatches>
     </Criteria>
-        <Criteria id="MCR_REFUGEE_PERC_6">
+
+    <Criteria id="MCR_REFUGEE_PERC_6">
       <ConfigurationValueMatches>
         <Group>Game</Group>
         <ConfigurationId>MCR_REFUGEE_PERCENT_CONF</ConfigurationId>
         <Value>6</Value>
       </ConfigurationValueMatches>
     </Criteria>
-        <Criteria id="MCR_REFUGEE_PERC_7">
+
+    <Criteria id="MCR_REFUGEE_PERC_7">
       <ConfigurationValueMatches>
         <Group>Game</Group>
         <ConfigurationId>MCR_REFUGEE_PERCENT_CONF</ConfigurationId>
         <Value>7</Value>
       </ConfigurationValueMatches>
     </Criteria>
-        <Criteria id="MCR_REFUGEE_PERC_8">
+
+    <Criteria id="MCR_REFUGEE_PERC_8">
       <ConfigurationValueMatches>
         <Group>Game</Group>
         <ConfigurationId>MCR_REFUGEE_PERCENT_CONF</ConfigurationId>
         <Value>8</Value>
       </ConfigurationValueMatches>
     </Criteria>
-        <Criteria id="MCR_REFUGEE_PERC_9">
+
+    <Criteria id="MCR_REFUGEE_PERC_9">
       <ConfigurationValueMatches>
         <Group>Game</Group>
         <ConfigurationId>MCR_REFUGEE_PERCENT_CONF</ConfigurationId>
         <Value>9</Value>
       </ConfigurationValueMatches>
     </Criteria>
-        <Criteria id="MCR_REFUGEE_PERC_10">
+
+    <Criteria id="MCR_REFUGEE_PERC_10">
       <ConfigurationValueMatches>
         <Group>Game</Group>
         <ConfigurationId>MCR_REFUGEE_PERCENT_CONF</ConfigurationId>
         <Value>10</Value>
       </ConfigurationValueMatches>
     </Criteria>
+
+    
+  <!-- Who is owner config -->
+    <Criteria id="MCR_OWNER_FOUNDER">
+      <ConfigurationValueMatches>
+        <Group>Game</Group>
+        <ConfigurationId>MCR_OWNER</ConfigurationId>
+        <Value>founder</Value>
+      </ConfigurationValueMatches>
+    </Criteria>
+
+    <Criteria id="MCR_OWNER_DEFENDER">
+      <ConfigurationValueMatches>
+        <Group>Game</Group>
+        <ConfigurationId>MCR_OWNER</ConfigurationId>
+        <Value>defender</Value>
+      </ConfigurationValueMatches>
+    </Criteria>
   </ActionCriteria>
+
+  <!-- ============ Game Setting Files =================== -->
   <FrontEndActions>
     <UpdateDatabase id="SetupGameParameters">
       <File>GameSetup/GameSetupParameters.xml</File>
@@ -124,47 +186,69 @@
     </UpdateText>
   </FrontEndActions>
   <InGameActions>
+  <!-- ============ LUA Files =================== -->
     <AddGameplayScripts id="onRazeHook">      
       <Properties>
           <LoadOrder>99997</LoadOrder>
       </Properties>
       <File>Ingame/onRaze.lua</File>
     </AddGameplayScripts>
+
     <AddGameplayScripts id="Civ5RazingScript">      
     <Properties>
         <LoadOrder>99999</LoadOrder>
     </Properties>
+      <Criteria>MCR_CIV5_RAZING_STYLE_6</Criteria>
       <File>Ingame/CityMigration.lua</File>
     </AddGameplayScripts>
+
     <AddGameplayScripts id="onCiv5">      
     <Properties>
         <LoadOrder>99998</LoadOrder>
     </Properties>
+      <Criteria>MCR_CIV5_RAZING_STYLE_5</Criteria>
       <File>Ingame/Civ5Razing.lua</File>
     </AddGameplayScripts>
+    
+  <!-- ============ SQL Files =================== -->
     <UpdateDatabase id="Building"> 
       <File>Ingame/buildings/RazingBuilding.sql</File>
     </UpdateDatabase>
+    
+  <!-- Settings Schema -->
     <UpdateDatabase id="Schema">      
       <Properties>
         <LoadOrder>1</LoadOrder>
       </Properties>
       <File priority="10">Ingame/schema.sql</File>
     </UpdateDatabase>
-    <UpdateDatabase id="giveSettlerDisabled">      
+    
+  <!-- Compensation -->
+    <UpdateDatabase id="giveNoCompensation">      
       <Properties>
         <LoadOrder>500</LoadOrder>
       </Properties>
-      <Criteria>MCR_GIVE_SETTLER_ID_Disabled</Criteria>
-      <File priority="1">Ingame/settings/giveSettler/giveSettlerDisabled.sql</File>
-    </UpdateDatabase>
-    <UpdateDatabase id="giveSettlerEnabled">
-        <Properties>
+      <Criteria>MCR_COMPENSATION_NOTHING</Criteria>
+      <File priority="1">Ingame/settings/compensation/comp_nothing.sql</File>
+    </UpdateDatabase>   
+    
+     <UpdateDatabase id="giveBuilderCompensation">      
+      <Properties>
         <LoadOrder>500</LoadOrder>
       </Properties>
-      <Criteria>MCR_GIVE_SETTLER_ID_enabled</Criteria>
-      <File>Ingame/settings/giveSettler/giveSettlerEnabled.sql</File>
+      <Criteria>MCR_COMPENSATION_BUILDER</Criteria>
+      <File priority="1">Ingame/settings/compensation/comp_builder.sql</File>
     </UpdateDatabase>
+
+     <UpdateDatabase id="giveSettlerCompensation">      
+      <Properties>
+        <LoadOrder>500</LoadOrder>
+      </Properties>
+      <Criteria>MCR_COMPENSATION_SETTLER</Criteria>
+      <File priority="1">Ingame/settings/compensation/comp_settler.sql</File>
+    </UpdateDatabase>
+
+  <!-- Deterministic? -->
     <UpdateDatabase id="RandomRefugeeDisabled">      
       <Properties>
         <LoadOrder>500</LoadOrder>
@@ -172,6 +256,7 @@
       <Criteria>MCR_DETERMINISTIC_REFUGEE_DISABLED</Criteria>
       <File priority="1">Ingame/settings/deterministic_refugee/deterministicRefugeeDisabled.sql</File>
     </UpdateDatabase>
+
     <UpdateDatabase id="RandomRefugeeEnabled">
         <Properties>
         <LoadOrder>500</LoadOrder>
@@ -179,6 +264,9 @@
       <Criteria>MCR_DETERMINISTIC_REFUGEE_ENABLED</Criteria>
       <File>Ingame/settings/deterministic_refugee/deterministicRefugeeEnabled.sql</File>
     </UpdateDatabase>
+
+    
+  <!-- Deterministic chance -->
     <UpdateDatabase id="MCR_REFUGEE_PERC_Action_0">
       <Properties>
       <LoadOrder>500</LoadOrder>
@@ -249,26 +337,53 @@
     <Criteria>MCR_REFUGEE_PERC_9</Criteria>
     <File>Ingame/settings/refugeePerc/refugee_9.sql</File>
   </UpdateDatabase>
-      <UpdateDatabase id="MCR_REFUGEE_PERC_Action_10">
+  <UpdateDatabase id="MCR_REFUGEE_PERC_Action_10">
       <Properties>
       <LoadOrder>500</LoadOrder>
     </Properties>
     <Criteria>MCR_REFUGEE_PERC_10</Criteria>
     <File>Ingame/settings/refugeePerc/refugee_10.sql</File>
   </UpdateDatabase>
+
+  <!-- WhoIsFounder-->
+    <UpdateDatabase id="MCR_WHO_OWNER">
+      <Properties>
+      <LoadOrder>500</LoadOrder>
+    </Properties>
+    <Criteria>MCR_OWNER_FOUNDER</Criteria>
+    <File>Ingame/settings/owner/city_owner_founder.sql</File>
+  </UpdateDatabase>
+
+    <UpdateDatabase id="MCR_WHO_OWNER">
+      <Properties>
+      <LoadOrder>500</LoadOrder>
+    </Properties>
+    <Criteria>MCR_OWNER_DEFENDER</Criteria>
+    <File>Ingame/settings/owner/city_owner_defender.sql</File>
+  </UpdateDatabase>
+
   </InGameActions>
+
+    <!--=============== Files =================-->
+
   <Files>
     <File>GameSetup/GameSetupParameters.xml</File>
     <File>GameSetup/GameSetupParameters_LOC.xml</File>
+
     <File>Ingame/onRaze.lua</File>
     <File>Ingame/CityMigration.lua</File>
     <File>Ingame/Civ5Razing.lua</File>      
+
     <File>Ingame/buildings/RazingBuilding.sql</File>
     <File>Ingame/schema.sql</File>
-    <File>Ingame/settings/giveSettler/giveSettlerDisabled.sql</File>
-    <File>Ingame/settings/giveSettler/giveSettlerEnabled.sql</File>
+
+    <File>Ingame/settings/compensation/comp_builder.sql</File>
+    <File>Ingame/settings/compensation/comp_nothing.sql</File>
+    <File>Ingame/settings/compensation/comp_settler.sql</File>
+
     <File>Ingame/settings/deterministic_refugee/deterministicRefugeeDisabled.sql</File>
     <File>Ingame/settings/deterministic_refugee/deterministicRefugeeEnabled.sql</File>
+
     <File>Ingame/settings/refugeePerc/refugee_0.sql</File>
     <File>Ingame/settings/refugeePerc/refugee_1.sql</File>
     <File>Ingame/settings/refugeePerc/refugee_2.sql</File>
@@ -280,5 +395,8 @@
     <File>Ingame/settings/refugeePerc/refugee_8.sql</File>
     <File>Ingame/settings/refugeePerc/refugee_9.sql</File>
     <File>Ingame/settings/refugeePerc/refugee_10.sql</File>
+
+    <File>Ingame/settings/owner/city_owner_defender.sql</File>
+    <File>Ingame/settings/owner/city_owner_founder.sql</File>
   </Files>
 </Mod>

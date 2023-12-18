@@ -23,11 +23,7 @@
 		<Row Domain="Civ5RazingCompensationDomain" Value="NOTHING" Name="LOC_CIV5_COMPENSATION_NONE" Description="LOC_CIV5_COMPENSATION_NONE_DESC" sortIndex="0"/>
 		<Row Domain="Civ5RazingCompensationDomain" Value="BUILDER" Name="LOC_CIV5_COMPENSATION_BUILDER" Description="LOC_CIV5_COMPENSATION_BUILDER_DESC" sortIndex="10"/>
 		<Row Domain="Civ5RazingCompensationDomain" Value="SETTLER" Name="LOC_CIV5_COMPENSATION_SETTLER" Description="LOC_CIV5_COMPENSATION_SETTLER_DESC" sortIndex="20"/>
-		<Row Domain="Civ5RazingCompensationDomain" Value="GOLD" Name="LOC_CIV5_COMPENSATION_GOLD" Description="LOC_CIV5_COMPENSATION_GOLD_DESC" sortIndex="30"/>
-		<Row Domain="Civ5RazingCompensationDomain" Value="FAITH" Name="LOC_CIV5_COMPENSATION_FAITH" Description="LOC_CIV5_COMPENSATION_FAITH_DESC" sortIndex="40"/>
-		<Row Domain="Civ5RazingCompensationDomain" Value="SCIENCE" Name="LOC_CIV5_COMPENSATION_SCIENCE" Description="LOC_CIV5_COMPENSATION_SCIENCE_DESC" sortIndex="50"/>
-		<Row Domain="Civ5RazingCompensationDomain" Value="CULTURE" Name="LOC_CIV5_COMPENSATION_CULTURE" Description="LOC_CIV5_COMPENSATION_CULTURE_DESC" sortIndex="60"/>
-		
+
 		<Row Domain="Civ5WhoIsOwnerDomain" Value="founder" Name="LOC_CIV5_FOUNDER" Description="LOC_CIV5_FOUNDER_DESC" sortIndex="10"/>
 		<Row Domain="Civ5WhoIsOwnerDomain" Value="defender" Name="LOC_CIV5_OWNER" Description="LOC_CIV5_OWNER_DESC" sortIndex="20"/>
 

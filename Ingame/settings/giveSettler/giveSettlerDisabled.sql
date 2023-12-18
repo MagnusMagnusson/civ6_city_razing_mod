@@ -1,1 +1,0 @@
-REPLACE INTO MCR_CONFIG(name, value) VALUES ("giveSettler", "0");
