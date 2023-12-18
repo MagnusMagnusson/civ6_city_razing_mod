@@ -10,7 +10,6 @@ for building in GameInfo.Buildings() do
 end
 
 
-print("<<<<<<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>");
 function OnCityConquered(newOwner, oldOwner, cityId)
 	-- The city has been captured and changed hands. This is explicitly not destruction, that comes later. --
     -- This is where we note down the city that got captured and details about it, and then start paying attention to it in case it gets razed--
@@ -109,7 +108,6 @@ end
 
 
 function onCityRemoved(pid, cid)    
-    print("Removed!?!"); 
     -- A city has been removed from the map. Now to check if there is still a city on the plot. 
     -- When cities change ownership they are temporarily removed from the map and added again, triggering this function 
     -- Therefore we must go over the cities we marked as having been captured this turn, and if the city is gone we presume it has been razed.
@@ -133,18 +131,8 @@ GameEvents.CityConquered.Add(OnCityConquered);
 Events.CityRemovedFromMap.Add(onCityRemoved);
 
 function Add(func)
-    print("SOMETHING HAS BEEN ADDED !!!!!!!!!!!!!!")
     table.insert(Callbacks, func);
 end
-
-print("Setting up City Razed");
-print("======================================");
-print("======================================");
-print("======================================");
-
 ExposedMembers.CityRazed = {
     Add = Add 
 };
-
-print("ADd function");
-print(ExposedMembers.CityRazed)
