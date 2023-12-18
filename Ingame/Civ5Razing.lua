@@ -14,27 +14,38 @@ function onCityRazed(cityInfo)
     city:ChangePopulation(cityInfo.population - 1);
     RestoreTerritory(city, cityInfo);
     RestoreDistricts(city, cityInfo);
+    RestoreBuildings(city, cityInfo);
 end
 
 function RestoreTerritory(city, cityInfo)    
     --Restore Territory
+	local freeCityPlayer = PlayerManager.GetFreeCitiesPlayer();
     for i, plotIndex in pairs(cityInfo.plots) do
         local pPlot = Map.GetPlotByIndex(plotIndex);
-        pPlot:SetOwner(city);
+        WorldBuilder.CityManager():SetPlotOwner( pPlot:GetX(), pPlot:GetY(), freeCityPlayer:GetID(), city:GetID() );
     end
 end
 
 function RestoreDistricts(city, cityInfo)
     local queue = city:GetBuildQueue();
-    print("Queue", queue);
     for i, district in pairs(cityInfo.Districts) do
-        print("District:", i, district.districtType, district.x, district.y);
         if(district.districtType ~= 0) then
             print(Map.GetPlot(district.x, district.y));
-            --queue:CreateDistrict(district.districtType, Map.GetPlot(district.x, district.y):GetIndex(), 100);    
+            queue:CreateDistrict(district.districtType, Map.GetPlot(district.x, district.y):GetIndex());    
         else
             print("Skipping city center!");
         end
+    end
+end
+
+function RestoreBuildings(city, cityInfo)    
+    local queue = city:GetBuildQueue();
+    print("Restore Buildings start");
+    for i, buildingRow in pairs(cityInfo.Buildings) do
+        print(buildingRow.index, buildingRow.location);
+        local pPlot = Map.GetPlotByIndex(buildingRow.location);
+        print(pPlot:GetX(), pPlot:GetY());
+        queue:CreateBuilding(buildingRow.index, pPlot:GetX(), pPlot:GetY());
     end
 end
 
@@ -89,6 +100,7 @@ function OnCityConquered(newOwner, oldOwner, cityId)
         table.insert(districts, distRow);
     end
     
+    local buildings = GetCityBuildings(city);
         
     local plots = {};
 	for i, plot in pairs(city:GetOwnedPlots()) do 
@@ -104,11 +116,27 @@ function OnCityConquered(newOwner, oldOwner, cityId)
 		y = city:GetY(),
 		Name = city:GetName(),
         Districts = districts,
+        Buildings = buildings,
         plots = plots
 	}
 	table.insert(CityWatch, row);
 end
 
+
+function GetCityBuildings(city)
+    local buildings = {};
+    for building in GameInfo.Buildings() do
+        local buildingIndex = building.Index
+        if city:GetBuildings():HasBuilding(buildingIndex) then
+            local b = {
+                index = buildingIndex,
+                location = city:GetBuildings():GetBuildingLocation(buildingIndex)
+            }
+            table.insert(buildings, b);
+        end
+    end
+    return buildings;
+end
 
 function GetCityId(ownerId, cityId) 
 	local p = PlayerManager.GetPlayer(ownerId);
