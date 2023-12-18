@@ -14,27 +14,26 @@ for building in GameInfo.Buildings() do
 end
 
 function onCityRazed(cityInfo)
-	local freeCityPlayer = PlayerManager.GetFreeCitiesPlayer();
     local originalOwner = PlayerManager.GetPlayer(cityInfo.originalOwner);
     local city = originalOwner:GetCities():Create(cityInfo.x, cityInfo.y);
+    local freeCityPlayer =PlayerManager.GetFreeCitiesPlayer():GetID();
     city:SetName(cityInfo.Name);
     city:ChangePopulation(cityInfo.population - 1);
     RestoreTerritory(city, cityInfo);
     RestoreDistricts(city, cityInfo);
     RestoreBuildings(city, cityInfo);
-    CityManager.TransferCity(city, freeCityPlayer:GetID());
+    CityManager.TransferCity(city, freeCityPlayer);
     CleanupFreeUnits(city, cityInfo);
 end
 
 function CleanupFreeUnits(city, cityInfo)
+    -- Tranfering cities to the Free City Player spawns a couple of hostile units. We don't want this, so we kill them instantly --
     local freeCityPlayer = PlayerManager.GetFreeCitiesPlayer();
     local units = freeCityPlayer:GetUnits();
     local bannedPlots = Set(cityInfo.plots);
 
     for i, unit in units:Members() do 
-        print("unit", i, unit);
         local plotId = Map.GetPlot(unit:GetX(), unit:GetY()):GetIndex();
-        print("Unit on plot ", plotId);
         if(bannedPlots[plotId]) then
             UnitManager.Kill(unit);
         end
@@ -42,6 +41,7 @@ function CleanupFreeUnits(city, cityInfo)
 end
 
 function Set (list)
+    -- Helper function, turns a list into set --
     local set = {}
     for _, l in ipairs(list) do set[l] = true end
     return set
@@ -49,7 +49,7 @@ end
 
   
 function RestoreTerritory(city, cityInfo)    
-    --Restore Territory
+    -- Restore Territory. By default cities only have their imminent territory, but we want to restore the entire territory --
 	local freeCityPlayer = PlayerManager.GetFreeCitiesPlayer();
     for i, plotIndex in pairs(cityInfo.plots) do
         local pPlot = Map.GetPlotByIndex(plotIndex);
@@ -58,73 +58,54 @@ function RestoreTerritory(city, cityInfo)
 end
 
 function RestoreDistricts(city, cityInfo)
+    -- Rebuild all the lost districts of the city --
     local queue = city:GetBuildQueue();
     for i, district in pairs(cityInfo.Districts) do
         if(district.districtType ~= 0) then
+            -- We skip the city center, but otherwise restore the other districts the city used to have --
             print(Map.GetPlot(district.x, district.y));
             queue:CreateDistrict(district.districtType, Map.GetPlot(district.x, district.y):GetIndex());    
-        else
-            print("Skipping city center!");
         end
     end
 end
 
 function RestoreBuildings(city, cityInfo)    
+    -- Rebuild all the buildings the city used to have --
     local queue = city:GetBuildQueue();
-    print("Restore Buildings start");
     for i, buildingRow in pairs(cityInfo.Buildings) do
-        print(buildingRow.index, buildingRow.location);
         local pPlot = Map.GetPlotByIndex(buildingRow.location);
-        print(pPlot:GetX(), pPlot:GetY());
         queue:CreateBuilding(buildingRow.index, pPlot:GetX(), pPlot:GetY());
     end
 end
 
 function OnCityConquered(newOwner, oldOwner, cityId)
-    print("CityConquered!", newOwner, oldOwner, cityId)
-	-- Safety check -- 
-	if(newOwner == nil or cityId == nil) then
-		print("Someone is missing!", newOwner, cityId);
+	-- The city has been captured and changed hands. This is explicitly not destruction, that comes later. --
+    -- This is where we note down the city that got captured and details about it, and then start paying attention to it in case it gets razed--
+	if(newOwner == nil or cityId == nil or oldOwner == nil) then
+	    -- Safety check to make sure we aren't missing info we need --
+		print("Error: Safety check failed: newOwner, oldOwner, or CityId is missing", newOwner, oldOwner, cityId);
 		return;
 	end
 
-	--print("City was just captured, ", newOwner, oldOwner, cityId);
-
 	local city = GetCityId(newOwner, cityId);
 	local pop = city:GetPopulation();
-
 	for i,cityInfo in ipairs(CityWatch) do
 		if(cityInfo.x == city:GetX() and cityInfo.y == city:GetY()) then
+            -- If the city is recaptured in a single turn we must adjust the city watch, as the city ID may change.
 			cityInfo.newOwner = newOwner;
 			cityInfo.cityId = cityId;
 			cityInfo.population = pop;
-			print("City recaptured in one turn, updating watch");
+            cityInfo.Name = city:GetName();
 			return;
 		end
 	end
 
-	print("City not transferred, adding to watch list");
-
-    local districts = {};
-    local distNum = city:GetDistricts():GetNumDistricts();
-    print(distNum);
-	for i = 0, distNum - 1  do 
-        local dist = city:GetDistricts():GetDistrictByIndex(i);
-        local distRow = {
-            districtType = dist:GetType(),
-            x = dist:GetX(),
-            y = dist:GetY()
-        }
-        table.insert(districts, distRow);
-    end
-    
+    -- Capture the current state of the city: Territory, District, Buildings
+    local districts = GetCityDistricts(city);
     local buildings = GetCityBuildings(city);
-        
-    local plots = {};
-	for i, plot in pairs(city:GetOwnedPlots()) do 
-        table.insert(plots, plot:GetIndex());
-    end
+    local plots = GetCityPlots(city);
 
+    -- Save city data to the city watch, so if the city is razed and all the data is lost we can recreate it -- 
 	local row = {
 		newOwner = newOwner,
 		originalOwner = city:GetOriginalOwner(),
@@ -140,22 +121,47 @@ function OnCityConquered(newOwner, oldOwner, cityId)
 	table.insert(CityWatch, row);
 end
 
+function GetCityPlots(city)
+    -- Technically we don't need much beyond GetOwnedPlots(), but dragging this out in case we want to capture other plot data later, like features --
+    local plots = {};
+	for i, plot in pairs(city:GetOwnedPlots()) do 
+        table.insert(plots, plot:GetIndex());
+    end
+    return plots;
+end
+
+function GetCityDistricts(city)
+    local districts = {};
+    local distNum = city:GetDistricts():GetNumDistricts();
+	for i = 0, distNum - 1  do 
+        local dist = city:GetDistricts():GetDistrictByIndex(i);
+        local distRow = {
+            districtType = dist:GetType(),
+            x = dist:GetX(),
+            y = dist:GetY()
+        }
+        table.insert(districts, distRow);
+    end
+    return districts;
+end
 
 function GetCityBuildings(city)
     local buildings = {};
     for building in GameInfo.Buildings() do
         local buildingIndex = building.Index
         print(building.BuildingType);
-        if city:GetBuildings():HasBuilding(buildingIndex) then
-            local b = {
-                index = buildingIndex,
+        if city:GetBuildings():HasBuilding(buildingIndex) or building.Index == RAZING_BUILDING.Index then
+            local location;
+            if(city:GetBuildings():HasBuilding(buildingIndex)) then
+                -- A normal building. Note where it is located --
                 location = city:GetBuildings():GetBuildingLocation(buildingIndex)
-            }
-            table.insert(buildings, b);
-        elseif building.Index == RAZING_BUILDING.Index then
+            else
+                -- Razing building. Cities aren't supposed to have it, so we explicity target the city center --
+                location = city:GetPlot():GetIndex() 
+            end
             local b = {
                 index = buildingIndex,
-                location = city:GetPlot():GetIndex() 
+                location = location
             }
             table.insert(buildings, b);
         end
@@ -186,7 +192,8 @@ end
 
 function OnTurnEnded()
     CityWatch = {}; --Done, all cities ought to have been razed or not razed by now.
-    
+
+    -- Scan over all free cities. If any of them have the razing city then that city is being razed, and we must decrement the pops it has (or destroy it) --
 	local freeCityPlayer = PlayerManager.GetFreeCitiesPlayer();
     local cities = freeCityPlayer:GetCities();
     for i, city in cities:Members() do
@@ -201,31 +208,31 @@ function OnTurnEnded()
     end
 end
 
+local debug = true;
+
 function init()	
-    print("Initi civ5");
-	--loadBoolSetting("giveSettler", false);
-	--loadBoolSetting("guaranteeRefugee", false);
-	--loadIntSetting("refugeePerc", 5);
+	loadBoolSetting("civ5_razing_style", false);
+    -- Do nothing unless civ5 styled razing is enabled for the game --
+    if(debug == true or settings["civ5_razing_style"] == true) then 
+        GameEvents.CityConquered.Add(OnCityConquered);
+        Events.CityRemovedFromMap.Add(onCityRemoved);
+        Events.TurnEnd.Add(OnTurnEnded);
+    end
 end
 
 function onCityRemoved(pid, cid)     
-    print("City Removed", playerId, cityId);
-
+    -- A city has been removed from the map. Now to check if there is still a city on the plot. 
+    -- When cities change ownership they are temporarily removed from the map and added again, triggering this function 
+    -- Therefore we must go over the cities we marked as having been captured this turn, and if the city is gone we presume it has been razed.
+    -- If it is still there then it probably wasn't razed.
+    -- We just hope that nobody nuked the captured city and accidentally trigger this function. 
     for i, cityInfo in ipairs(CityWatch) do
-		--Because the various events are in a bad order, just check at the end of a turn if any captured cities are still there. 
-		print("Testing", cityInfo.cityId);
-		print(cityInfo.x, cityInfo.y)
 		local plot = Map.GetPlot(cityInfo.x, cityInfo.y);
-		if(plot:IsCity()) then
-			print("Removal: City there", cityInfo.cityId);
-		else
-			print("Removal: City gone", cityInfo.cityId);
+		if(plot:IsCity() ~= true) then
+            --City razed, let's recreate it--
             onCityRazed(cityInfo);
 		end
 	end
 end
 
-GameEvents.CityConquered.Add(OnCityConquered);
-Events.CityRemovedFromMap.Add(onCityRemoved);
-Events.TurnEnd.Add(OnTurnEnded);
 init();
