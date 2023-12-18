@@ -5,24 +5,55 @@
 
 local CityWatch = {};
 local settings = {};
-print("Civ Razing!");
+local RAZING_BUILDING;
+
+for building in GameInfo.Buildings() do
+    if(building.BuildingType == 'BUILDING_CIV5_RAZE') then
+        RAZING_BUILDING = building;
+    end
+end
 
 function onCityRazed(cityInfo)
 	local freeCityPlayer = PlayerManager.GetFreeCitiesPlayer();
-    local city = freeCityPlayer:GetCities():Create(cityInfo.x, cityInfo.y);
+    local originalOwner = PlayerManager.GetPlayer(cityInfo.originalOwner);
+    local city = originalOwner:GetCities():Create(cityInfo.x, cityInfo.y);
     city:SetName(cityInfo.Name);
     city:ChangePopulation(cityInfo.population - 1);
     RestoreTerritory(city, cityInfo);
     RestoreDistricts(city, cityInfo);
     RestoreBuildings(city, cityInfo);
+    CityManager.TransferCity(city, freeCityPlayer:GetID());
+    CleanupFreeUnits(city, cityInfo);
 end
 
+function CleanupFreeUnits(city, cityInfo)
+    local freeCityPlayer = PlayerManager.GetFreeCitiesPlayer();
+    local units = freeCityPlayer:GetUnits();
+    local bannedPlots = Set(cityInfo.plots);
+
+    for i, unit in units:Members() do 
+        print("unit", i, unit);
+        local plotId = Map.GetPlot(unit:GetX(), unit:GetY()):GetIndex();
+        print("Unit on plot ", plotId);
+        if(bannedPlots[plotId]) then
+            UnitManager.Kill(unit);
+        end
+    end
+end
+
+function Set (list)
+    local set = {}
+    for _, l in ipairs(list) do set[l] = true end
+    return set
+end
+
+  
 function RestoreTerritory(city, cityInfo)    
     --Restore Territory
 	local freeCityPlayer = PlayerManager.GetFreeCitiesPlayer();
     for i, plotIndex in pairs(cityInfo.plots) do
         local pPlot = Map.GetPlotByIndex(plotIndex);
-        WorldBuilder.CityManager():SetPlotOwner( pPlot:GetX(), pPlot:GetY(), freeCityPlayer:GetID(), city:GetID() );
+        WorldBuilder.CityManager():SetPlotOwner( pPlot:GetX(), pPlot:GetY(), cityInfo.originalOwner, city:GetID() );
     end
 end
 
@@ -49,18 +80,6 @@ function RestoreBuildings(city, cityInfo)
     end
 end
 
-function giveSettler(playerId)
-	print("giveSettler()");
-	if(playerExists(playerId)) then 	
-		local owner = PlayerManager.GetPlayer(playerId)
-		for i = 0, count - 1 do 
-			local capital = owner:GetCities():GetCapitalCity();
-			local settler = GameInfo.Units["UNIT_SETTLER"];
-			owner:GetUnits():Create(settler, capital:GetX(), capital:GetY());
-		end
-	end
-end
-
 function OnCityConquered(newOwner, oldOwner, cityId)
     print("CityConquered!", newOwner, oldOwner, cityId)
 	-- Safety check -- 
@@ -76,7 +95,6 @@ function OnCityConquered(newOwner, oldOwner, cityId)
 
 	for i,cityInfo in ipairs(CityWatch) do
 		if(cityInfo.x == city:GetX() and cityInfo.y == city:GetY()) then
-			cityInfo.oldOwner = oldOwner;
 			cityInfo.newOwner = newOwner;
 			cityInfo.cityId = cityId;
 			cityInfo.population = pop;
@@ -109,7 +127,7 @@ function OnCityConquered(newOwner, oldOwner, cityId)
 
 	local row = {
 		newOwner = newOwner,
-		oldOwner = oldOwner,
+		originalOwner = city:GetOriginalOwner(),
 		cityId = cityId,
 		population = pop,
 		x = city:GetX(),
@@ -127,10 +145,17 @@ function GetCityBuildings(city)
     local buildings = {};
     for building in GameInfo.Buildings() do
         local buildingIndex = building.Index
+        print(building.BuildingType);
         if city:GetBuildings():HasBuilding(buildingIndex) then
             local b = {
                 index = buildingIndex,
                 location = city:GetBuildings():GetBuildingLocation(buildingIndex)
+            }
+            table.insert(buildings, b);
+        elseif building.Index == RAZING_BUILDING.Index then
+            local b = {
+                index = buildingIndex,
+                location = city:GetPlot():GetIndex() 
             }
             table.insert(buildings, b);
         end
@@ -160,7 +185,20 @@ function loadIntSetting(key, default)
 end
 
 function OnTurnEnded()
-	print("Ended Turn");
+    CityWatch = {}; --Done, all cities ought to have been razed or not razed by now.
+    
+	local freeCityPlayer = PlayerManager.GetFreeCitiesPlayer();
+    local cities = freeCityPlayer:GetCities();
+    for i, city in cities:Members() do
+        if(city:GetBuildings():HasBuilding(RAZING_BUILDING.Index)) then
+            local pop = city:GetPopulation();
+            if(pop == 1) then
+                CityManager.DestroyCity(city);
+            else
+                city:ChangePopulation(-1);
+            end
+        end
+    end
 end
 
 function init()	

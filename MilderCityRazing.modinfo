@@ -136,6 +136,9 @@
     </Properties>
       <File>Ingame/Civ5Razing.lua</File>
     </AddGameplayScripts>
+    <UpdateDatabase id="Building"> 
+      <File>Ingame/buildings/RazingBuilding.sql</File>
+    </UpdateDatabase>
     <UpdateDatabase id="Schema">      
       <Properties>
         <LoadOrder>1</LoadOrder>
@@ -252,7 +255,8 @@
     <File>GameSetup/GameSetupParameters.xml</File>
     <File>GameSetup/GameSetupParameters_LOC.xml</File>
     <File>Ingame/onCityRazed.lua</File>
-    <File>Ingame/Civ5Razing.lua</File>
+    <File>Ingame/Civ5Razing.lua</File>      
+    <File>Ingame/buildings/RazingBuilding.sql</File>
     <File>Ingame/schema.sql</File>
     <File>Ingame/settings/giveSettler/giveSettlerDisabled.sql</File>
     <File>Ingame/settings/giveSettler/giveSettlerEnabled.sql</File>
