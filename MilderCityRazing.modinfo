@@ -124,15 +124,21 @@
     </UpdateText>
   </FrontEndActions>
   <InGameActions>
-    <AddGameplayScripts id="onRaze">      
+    <AddGameplayScripts id="onRazeHook">      
+      <Properties>
+          <LoadOrder>99997</LoadOrder>
+      </Properties>
+      <File>Ingame/onRaze.lua</File>
+    </AddGameplayScripts>
+    <AddGameplayScripts id="Civ5RazingScript">      
     <Properties>
         <LoadOrder>99999</LoadOrder>
     </Properties>
-      <File>Ingame/onCityRazed.lua</File>
+      <File>Ingame/CityMigration.lua</File>
     </AddGameplayScripts>
-        <AddGameplayScripts id="onCiv5">      
+    <AddGameplayScripts id="onCiv5">      
     <Properties>
-        <LoadOrder>99999</LoadOrder>
+        <LoadOrder>99998</LoadOrder>
     </Properties>
       <File>Ingame/Civ5Razing.lua</File>
     </AddGameplayScripts>
@@ -254,7 +260,8 @@
   <Files>
     <File>GameSetup/GameSetupParameters.xml</File>
     <File>GameSetup/GameSetupParameters_LOC.xml</File>
-    <File>Ingame/onCityRazed.lua</File>
+    <File>Ingame/onRaze.lua</File>
+    <File>Ingame/CityMigration.lua</File>
     <File>Ingame/Civ5Razing.lua</File>      
     <File>Ingame/buildings/RazingBuilding.sql</File>
     <File>Ingame/schema.sql</File>

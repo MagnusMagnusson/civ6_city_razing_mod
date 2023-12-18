@@ -4,11 +4,11 @@
 <!-- DateCreated: 10/21/2023 11:13:02 PM -->
 <GameData>
 	<LocalizedText>
-		<Row Tag="MCR_LOC_GIVE_SETTLER_NAME" Language="en_US">
-			<Text>City Razing Gives Settler</Text>
+		<Row Tag="MCR_LOC_COMPENSATION_NAME" Language="en_US">
+			<Text>Razing compensation</Text>
 		</Row>
-		<Row Tag="MCR_LOC_GIVE_SETTLER_DESC" Language="en_US">
-			<Text>The owner of a razed city gets a free settler</Text>
+		<Row Tag="MCR_LOC_COMPENSATION_DESC" Language="en_US">
+			<Text>Compensation paid out to the owner of a razed city</Text>
 		</Row>
 		<Row Tag="MCR_LOC_REFUGEE_PERCENT_NAME" Language="en_US">
 			<Text>City Razing Survival Rate</Text>
@@ -20,7 +20,164 @@
 			<Text>Deterministic Pop Resettlement</Text>
 		</Row>		
 		<Row Tag="MCR_LOC_REFUGEE_DETERMINISTIC_DESC" Language="en_US">
-			<Text>If enabled, the designated percentage of a razed cities populations always relocates: otherwise each pop will have a chance of escaping.</Text>
+			<Text>If enabled, the designated percentage of a razed cities populations always relocates: otherwise each pop will have a fixed chance of successful escape</Text>
+		</Row>
+
+		<Row Tag="LOC_CIV5_RAZING_PARAMETER_OFF_NAME" Language="en_US">
+			<Text>Raze instantly (Civ 6 Razing)</Text>
+		</Row>
+		
+		<Row Tag="LOC_CIV5_RAZING_PARAMETER_ON_NAME" Language="en_US">
+			<Text>Raze over time (Civ 5 Razing)</Text>
+		</Row>
+		
+		<Row Tag="LOC_CIV5_RAZING_PARAMETER_NAME" Language="en_US">
+			<Text>City Razing Behavior</Text>
+		</Row>
+		
+		<Row Tag="LOC_CIV5_RAZING_PARAMETER_OFF_DESC" Language="en_US">
+			<Text>Razed Cities are removed instantly: default Civilization 6 behavior</Text>
+		</Row>
+		
+		<Row Tag="LOC_CIV5_RAZING_PARAMETER_ON_DESC" Language="en_US">
+			<Text>Razed Cities become free cities and are razed over time: Mimicks Civilization 5 behavior</Text>
+		</Row>
+		
+		<Row Tag="LOC_CIV5_RAZING_PARAMETER_DESC" Language="en_US">
+			<Text>Set if Cities are razed instantly, or if they get razed over multiple turns</Text>
+		</Row>
+
+				
+		<Row Tag="LOC_CIV5_0_percent" Language="en_US">
+			<Text>0%</Text>
+		</Row>				
+		<Row Tag="LOC_CIV5_10_percent" Language="en_US">
+			<Text>10%</Text>
+		</Row>				
+		<Row Tag="LOC_CIV5_20_percent" Language="en_US">
+			<Text>20%</Text>
+		</Row>				
+		<Row Tag="LOC_CIV5_30_percent" Language="en_US">
+			<Text>30%</Text>
+		</Row>				
+		<Row Tag="LOC_CIV5_40_percent" Language="en_US">
+			<Text>40%</Text>
+		</Row>				
+		<Row Tag="LOC_CIV5_50_percent" Language="en_US">
+			<Text>50%</Text>
+		</Row>				
+		<Row Tag="LOC_CIV5_60_percent" Language="en_US">
+			<Text>60%</Text>
+		</Row>				
+		<Row Tag="LOC_CIV5_70_percent" Language="en_US">
+			<Text>70%</Text>
+		</Row>				
+		<Row Tag="LOC_CIV5_80_percent" Language="en_US">
+			<Text>80%</Text>
+		</Row>				
+		<Row Tag="LOC_CIV5_90_percent" Language="en_US">
+			<Text>90%</Text>
+		</Row>				
+		<Row Tag="LOC_CIV5_100_percent" Language="en_US">
+			<Text>100%</Text>
+		</Row>
+
+		<Row Tag="LOC_CIV5_0_percent_DESC" Language="en_US">
+			<Text>No pop will survive a razed city</Text>
+		</Row>		
+		<Row Tag="LOC_CIV5_10_percent_DESC" Language="en_US">
+			<Text>approximately 10% of a cities population will migrate to other cities</Text>
+		</Row>		
+		<Row Tag="LOC_CIV5_20_percent_DESC" Language="en_US">
+			<Text>approximately 20% of a cities population will migrate to other cities</Text>
+		</Row>		
+		<Row Tag="LOC_CIV5_30_percent_DESC" Language="en_US">
+			<Text>approximately 30% of a cities population will migrate to other cities</Text>
+		</Row>		
+		<Row Tag="LOC_CIV5_40_percent_DESC" Language="en_US">
+			<Text>approximately 40% of a cities population will migrate to other cities</Text>
+		</Row>		
+		<Row Tag="LOC_CIV5_50_percent_DESC" Language="en_US">
+			<Text>approximately 50% of a cities population will migrate to other cities</Text>
+		</Row>		
+		<Row Tag="LOC_CIV5_60_percent_DESC" Language="en_US">
+			<Text>approximately 60% of a cities population will migrate to other cities</Text>
+		</Row>		
+		<Row Tag="LOC_CIV5_70_percent_DESC" Language="en_US">
+			<Text>approximately 70% of a cities population will migrate to other cities</Text>
+		</Row>		
+		<Row Tag="LOC_CIV5_80_percent_DESC" Language="en_US">
+			<Text>approximately 80% of a cities population will migrate to other cities</Text>
+		</Row>		
+		<Row Tag="LOC_CIV5_90_percent_DESC" Language="en_US">
+			<Text>approximately 90% of a cities population will migrate to other cities</Text>
+		</Row>		
+		<Row Tag="LOC_CIV5_100_percent_DESC" Language="en_US">
+			<Text>All pops that survive the initial capture will migrate to other cities</Text>
+		</Row>
+
+		<Row Tag="LOC_CIV5_COMPENSATION_NONE" Language="en_US">
+			<Text>Nothing</Text>
+		</Row>		
+		<Row Tag="LOC_CIV5_COMPENSATION_SETTLER" Language="en_US">
+			<Text>Free Settler</Text>
+		</Row>	
+		<Row Tag="LOC_CIV5_COMPENSATION_BUILDER" Language="en_US">
+			<Text>Free Builder</Text>
+		</Row>
+		<Row Tag="LOC_CIV5_COMPENSATION_GOLD" Language="en_US">
+			<Text>Gold</Text>
+		</Row>
+		<Row Tag="LOC_CIV5_COMPENSATION_FAITH" Language="en_US">
+			<Text>Faith</Text>
+		</Row>		
+		<Row Tag="LOC_CIV5_COMPENSATION_SCIENCE" Language="en_US">
+			<Text>Science</Text>
+		</Row>		
+		<Row Tag="LOC_CIV5_COMPENSATION_CULTURE" Language="en_US">
+			<Text>Culture</Text>
+		</Row>
+
+		<Row Tag="LOC_CIV5_COMPENSATION_NONE_DESC" Language="en_US">
+			<Text>The owner of a razed city gets no compensation</Text>
+		</Row>		
+		<Row Tag="LOC_CIV5_COMPENSATION_SETTLER_DESC" Language="en_US">
+			<Text>The owner of a razed city gets a free settler</Text>
+		</Row>	
+		<Row Tag="LOC_CIV5_COMPENSATION_BUILDER_DESC" Language="en_US">
+			<Text>The owner of a razed city gets a free builder</Text>
+		</Row>
+		<Row Tag="LOC_CIV5_COMPENSATION_GOLD_DESC" Language="en_US">
+			<Text>The owner of a razed city gets 3 turns worth of gold</Text>
+		</Row>
+		<Row Tag="LOC_CIV5_COMPENSATION_FAITH_DESC" Language="en_US">
+			<Text>The owner of a razed city gets 3 turns worth of faith</Text>
+		</Row>		
+		<Row Tag="LOC_CIV5_COMPENSATION_SCIENCE_DESC" Language="en_US">
+			<Text>The owner of a razed city gets 3 turns worth of science</Text>
+		</Row>		
+		<Row Tag="LOC_CIV5_COMPENSATION_CULTURE_DESC" Language="en_US">
+			<Text>The owner of a razed city gets 3 turns worth of culture</Text>
+		</Row>
+
+		<Row Tag="LOC_CIV5_WHO_IS_OWNER" Language="en_US">
+			<Text>Razed City Owner</Text>
+		</Row>		
+		<Row Tag="LOC_CIV5_WHO_IS_OWNER_DESC" Language="en_US">
+			<Text>Who gets compensated for a razed city?</Text>
+		</Row>
+
+		<Row Tag="LOC_CIV5_FOUNDER" Language="en_US">
+			<Text>Original Owner</Text>
+		</Row>		
+		<Row Tag="LOC_CIV5_OWNER" Language="en_US">
+			<Text>Previous Owner</Text>
+		</Row>		
+		<Row Tag="LOC_CIV5_FOUNDER_DESC" Language="en_US">
+			<Text>The player who founded the city originally gets compensated</Text>
+		</Row>		
+		<Row Tag="LOC_CIV5_OWNER_DESC" Language="en_US">
+			<Text>The player who most recently held the city before capture gets compensated</Text>
 		</Row>
 	</LocalizedText>
 </GameData>

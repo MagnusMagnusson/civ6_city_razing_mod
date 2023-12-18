@@ -63,7 +63,6 @@ function RestoreDistricts(city, cityInfo)
     for i, district in pairs(cityInfo.Districts) do
         if(district.districtType ~= 0) then
             -- We skip the city center, but otherwise restore the other districts the city used to have --
-            print(Map.GetPlot(district.x, district.y));
             queue:CreateDistrict(district.districtType, Map.GetPlot(district.x, district.y):GetIndex());    
         end
     end
@@ -149,7 +148,6 @@ function GetCityBuildings(city)
     local buildings = {};
     for building in GameInfo.Buildings() do
         local buildingIndex = building.Index
-        print(building.BuildingType);
         if city:GetBuildings():HasBuilding(buildingIndex) or building.Index == RAZING_BUILDING.Index then
             local location;
             if(city:GetBuildings():HasBuilding(buildingIndex)) then
@@ -236,3 +234,24 @@ function onCityRemoved(pid, cid)
 end
 
 init();
+
+function test(cityInfo) 
+    print(cityInfo.Name);
+    print(cityInfo.Name);
+    print(cityInfo.Name);
+    print(cityInfo.Name);
+    print(cityInfo.Name);
+    print(cityInfo.Name);
+    print(cityInfo.Name);
+    print(cityInfo.Name);
+    print(cityInfo.Name);
+    print(cityInfo.Name);
+    print(cityInfo.Name);
+    print(cityInfo.Name);
+    print(cityInfo.Name);
+end
+
+print("Does CityRazed Exist?");
+print(ExposedMembers.CityRazed.Add);
+ExposedMembers.CityRazed.Add(test);
+print("Added");

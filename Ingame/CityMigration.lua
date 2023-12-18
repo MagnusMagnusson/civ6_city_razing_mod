@@ -2,7 +2,6 @@
 -- Author: Magnus
 -- DateCreated: 10/21/2023 11:49:34 PM
 --------------------------------------------------------------
-print("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
 local CityWatch = {};
 local settings = {};
 
