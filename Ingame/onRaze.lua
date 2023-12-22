@@ -124,7 +124,7 @@ function onCityRemoved(pid, cid)
 	end
 end
 
-function onTurnEnded()
+function OnTurnEnded()
     -- At this point we ought to have already determined if a city is razed or not, since you must raze the same turn you capture. --
     CityWatch = {};
 end

@@ -218,7 +218,7 @@
   <!-- Settings Schema -->
     <UpdateDatabase id="Schema">      
       <Properties>
-        <LoadOrder>1</LoadOrder>
+        <LoadOrder>2</LoadOrder>
       </Properties>
       <File priority="10">Ingame/schema.sql</File>
     </UpdateDatabase>

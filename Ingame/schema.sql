@@ -3,7 +3,7 @@ CREATE TABLE MCR_CONFIG (
 	value varchar(10) NOT NULL
 );
 
---default values--
-INSERT INTO TABLE MCR_CONFIG(name, value) VALUES ('giveSettler', "0");
-INSERT INTO TABLE MCR_CONFIG(name, value) VALUES ('guaranteeRefugee', "0");
-INSERT INTO TABLE MCR_CONFIG(name, value) VALUES ('refugeePerc', "7");
+INSERT INTO  MCR_CONFIG(name, value) VALUES ('compensation', 'nothing');
+INSERT INTO  MCR_CONFIG(name, value) VALUES ('guaranteeRefugee', '0');
+INSERT INTO  MCR_CONFIG(name, value) VALUES ('refugeePerc', '3');
+INSERT INTO  MCR_CONFIG(name, value) VALUES ('city_owner', 'defender');
