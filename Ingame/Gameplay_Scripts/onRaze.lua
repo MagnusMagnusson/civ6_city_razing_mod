@@ -28,6 +28,7 @@ function OnCityConquered(newOwner, oldOwner, cityId)
 			cityInfo.cityId = cityId;
 			cityInfo.population = pop;
             cityInfo.Name = city:GetName();
+            Game.SetProperty("Civ5Razing_CityWatch", CityWatch);
 			return;
 		end
 	end
@@ -36,6 +37,8 @@ function OnCityConquered(newOwner, oldOwner, cityId)
     local districts = GetCityDistricts(city);
     local buildings = GetCityBuildings(city);
     local plots = GetCityPlots(city);
+    local religion = GetReligiousPressure(city);
+    print("Religion to be saved", religion);
 
     -- Save city data to the city watch, so if the city is razed and all the data is lost we can recreate it -- 
 	local row = {
@@ -48,9 +51,11 @@ function OnCityConquered(newOwner, oldOwner, cityId)
 		Name = city:GetName(),
         Districts = districts,
         Buildings = buildings,
-        plots = plots
+        plots = plots,
+        Religion = religion,
 	}
 	table.insert(CityWatch, row);
+    Game.SetProperty("Civ5Razing_CityWatch", CityWatch);
 end
 
 
@@ -78,6 +83,18 @@ function GetCityDistricts(city)
     return districts;
 end
 
+function GetReligiousPressure(city)
+    --print("Fetching Religion Data!");
+    --print("City Id", city:GetID());
+    local cityReligion = ExposedMembers.CityRazed.GetReligionPressure(city:GetX(), city:GetY());
+    --print("Religious Table", cityReligion);
+    if(cityReligion == nil) then
+        --print("No table returned from GetReligionData, returning empty set");
+        return {}; --No religions here?
+    end
+    return cityReligion;
+end
+
 function GetCityBuildings(city)
     local buildings = {};
     for building in GameInfo.Buildings() do
@@ -100,6 +117,7 @@ function GetCityBuildings(city)
     end
     return buildings;
 end
+
 
 function GetCityId(ownerId, cityId) 
 	local p = PlayerManager.GetPlayer(ownerId);
@@ -127,6 +145,7 @@ end
 function OnTurnEnded()
     -- At this point we ought to have already determined if a city is razed or not, since you must raze the same turn you capture. --
     CityWatch = {};
+    Game.SetProperty("Civ5Razing_CityWatch", {});
 end
 
 GameEvents.CityConquered.Add(OnCityConquered);
@@ -139,3 +158,8 @@ end
 ExposedMembers.CityRazed = {
     Add = Add 
 };
+
+local c = Game.GetProperty("Civ5Razing_CityWatch");
+if(c ~= nil) then
+    CityWatch = c;
+end

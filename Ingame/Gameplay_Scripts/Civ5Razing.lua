@@ -20,6 +20,7 @@ function onCityRazed(cityInfo)
     RestoreTerritory(city, cityInfo);
     RestoreDistricts(city, cityInfo);
     RestoreBuildings(city, cityInfo);
+    RestoreCityReligion(city, cityInfo);
     CityManager.TransferCity(city, freeCityPlayer);
     CleanupFreeUnits(city, cityInfo);
 end
@@ -45,6 +46,16 @@ function Set (list)
     return set
 end
 
+function RestoreCityReligion(city, cityInfo)
+    local CityReligion = city:GetReligion();
+    print("Religion!");
+    print(cityInfo.Religion );
+    for  xx, religionTable in pairs(cityInfo.Religion) do
+        print("--", xx, religionTable);
+        print("Adding pressure", religionTable.Religion, religionTable.Pressure);
+        CityReligion:AddReligiousPressure("Restoring Religion To City", religionTable.Religion, religionTable.Pressure);
+    end
+end
   
 function RestoreTerritory(city, cityInfo)    
     -- Restore Territory. By default cities only have their imminent territory, but we want to restore the entire territory --

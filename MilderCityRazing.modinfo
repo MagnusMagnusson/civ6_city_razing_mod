@@ -191,7 +191,7 @@
       <Properties>
           <LoadOrder>99997</LoadOrder>
       </Properties>
-      <File>Ingame/onRaze.lua</File>
+      <File>Ingame/Gameplay_Scripts/onRaze.lua</File>
     </AddGameplayScripts>
 
     <AddGameplayScripts id="Civ5RazingScript">      
@@ -199,7 +199,7 @@
         <LoadOrder>99999</LoadOrder>
     </Properties>
       <Criteria>MCR_CIV5_RAZING_STYLE_6</Criteria>
-      <File>Ingame/CityMigration.lua</File>
+      <File>Ingame/Gameplay_Scripts/CityMigration.lua</File>
     </AddGameplayScripts>
 
     <AddGameplayScripts id="onCiv5">      
@@ -207,9 +207,17 @@
         <LoadOrder>99998</LoadOrder>
     </Properties>
       <Criteria>MCR_CIV5_RAZING_STYLE_5</Criteria>
-      <File>Ingame/Civ5Razing.lua</File>
+      <File>Ingame/Gameplay_Scripts/Civ5Razing.lua</File>
     </AddGameplayScripts>
     
+
+    <!-- ================= UI FILES =========-->        
+    <AddUserInterfaces>
+			<Properties>
+				<Context>InGame</Context>
+			</Properties>
+				<File>InGame/UI_Scripts/ReligionSpy.xml</File>
+    </AddUserInterfaces>
   <!-- ============ SQL Files =================== -->
     <UpdateDatabase id="Building"> 
       <File>Ingame/buildings/RazingBuilding.sql</File>
@@ -370,9 +378,12 @@
     <File>GameSetup/GameSetupParameters.xml</File>
     <File>GameSetup/GameSetupParameters_LOC.xml</File>
 
-    <File>Ingame/onRaze.lua</File>
-    <File>Ingame/CityMigration.lua</File>
-    <File>Ingame/Civ5Razing.lua</File>      
+    <File>Ingame/Gameplay_Scripts/onRaze.lua</File>
+    <File>Ingame/Gameplay_Scripts/CityMigration.lua</File>
+    <File>Ingame/Gameplay_Scripts/Civ5Razing.lua</File>      
+
+    <File>InGame/UI_Scripts/ReligionSpy.xml</File>
+    <File>InGame/UI_Scripts/ReligionSpy.lua</File>
 
     <File>Ingame/buildings/RazingBuilding.sql</File>
     <File>Ingame/schema.sql</File>
